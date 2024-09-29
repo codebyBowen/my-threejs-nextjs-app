@@ -101,7 +101,7 @@ export default function Home() {
 
       <Button asChild>
         <a
-          href="https://github.com/yourusername/your-repo"
+          href="https://github.com/codebyBowen/threejs-quickstart-template"
           target="_blank"
           rel="noopener noreferrer"
         >
