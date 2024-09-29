@@ -1,0 +1,11 @@
+Model Information:
+* title:	Moon Cake
+* source:	https://sketchfab.com/3d-models/moon-cake-1f4cd9ae262746ba9c1a196c3222ae0d
+* author:	ReddenWang (https://sketchfab.com/areddenwang)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Moon Cake" (https://sketchfab.com/3d-models/moon-cake-1f4cd9ae262746ba9c1a196c3222ae0d) by ReddenWang (https://sketchfab.com/areddenwang) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

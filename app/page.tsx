@@ -1,101 +1,113 @@
-import Image from "next/image";
+"use client";
+
+import dynamic from "next/dynamic";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+
+const ThreeJsScene = dynamic(() => import("./components/ThreeJsScene"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="container mx-auto p-4">
+      <h1 className="text-4xl font-bold mb-6">
+        Welcome to ThreeJs Quick Start
+      </h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      <Tabs defaultValue="overview" className="mb-6">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="features">Features</TabsTrigger>
+          <TabsTrigger value="instructions">Instructions</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview">
+          <Card>
+            <CardHeader>
+              <CardTitle>Project Overview</CardTitle>
+              <CardDescription>
+                A 3D model viewer built with Three.js and Next.js
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p>
+                This project demonstrates the integration of Three.js with
+                Next.js, allowing for interactive 3D model viewing directly in
+                the browser. It showcases the power of web-based 3D graphics and
+                the flexibility of modern web development frameworks.
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="features">
+          <Card>
+            <CardHeader>
+              <CardTitle>Key Features</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Load and display GLTF 3D models</li>
+                <li>Switch between multiple 3D models</li>
+                <li>Adjust model rotation speed</li>
+                <li>Responsive design for various screen sizes</li>
+                <li>Built with modern web technologies (Next.js, Three.js)</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="instructions">
+          <Card>
+            <CardHeader>
+              <CardTitle>How to Use</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ol className="list-decimal pl-5 space-y-2">
+                <li>Use the dropdown menu to select different 3D models</li>
+                <li>
+                  Adjust the slider to change the rotation speed of the model
+                </li>
+                <li>
+                  The current rotation speed is displayed next to the slider
+                </li>
+                <li>
+                  The 3D model will automatically rotate based on the selected
+                  speed
+                </li>
+                <li>
+                  You can view the model from different angles as it rotates
+                </li>
+              </ol>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>3D Model Viewer</CardTitle>
+          <CardDescription>Interact with the 3D model below</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ThreeJsScene />
+        </CardContent>
+      </Card>
+
+      <Button asChild>
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://github.com/yourusername/your-repo"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
+          View on GitHub
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </Button>
+    </main>
   );
 }
