@@ -1,6 +1,5 @@
 "use client";
 
-import { Metadata } from 'next'
 import dynamic from "next/dynamic";
 import {
   Card,
@@ -15,29 +14,6 @@ import { Button } from "@/components/ui/button";
 const ThreeJsScene = dynamic(() => import("./components/ThreeJsScene"), {
   ssr: false,
 });
-
-// export const metadata: Metadata = {
-//   title: 'ThreeJs Quick Start - Interactive 3D Model Viewer',
-//   description: 'Explore our interactive 3D model viewer built with Three.js and Next.js. View and manipulate 3D models directly in your browser.',
-//   openGraph: {
-//     title: 'ThreeJs Quick Start - Interactive 3D Model Viewer',
-//     description: 'Explore our interactive 3D model viewer built with Three.js and Next.js. View and manipulate 3D models directly in your browser.',
-//     // images: [
-//     //   {
-//     //     url: 'https://example.com/og-image.jpg',
-//     //     width: 1200,
-//     //     height: 630,
-//     //     alt: '3D Model Viewer Preview',
-//     //   },
-//     // ],
-//   },
-//   twitter: {
-//     card: 'summary_large_image',
-//     title: 'ThreeJs Quick Start - Interactive 3D Model Viewer',
-//     description: 'Explore our interactive 3D model viewer built with Three.js and Next.js. View and manipulate 3D models directly in your browser.',
-//     // images: ['https://example.com/twitter-image.jpg'],
-//   },
-// }
 
 export default function Home() {
   return (

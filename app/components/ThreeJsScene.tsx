@@ -21,7 +21,7 @@ const ThreeJsScene = () => {
   const [selectedModel, setSelectedModel] = useState(modelLinks[0])
   const [cameraDistance, setCameraDistance] = useState(10)
   const initialCameraPositionRef = useRef<THREE.Vector3 | null>(null)
-  const [initialCameraDistance, setInitialCameraDistance] = useState(10)
+  // const [initialCameraDistance, setInitialCameraDistance] = useState(10)
   const userAdjustedCameraRef = useRef(false)
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const ThreeJsScene = () => {
 
           // 保存初始相机位置
           initialCameraPositionRef.current = camera.position.clone()
-          setInitialCameraDistance(cameraZ)
+          // setInitialCameraDistance(cameraZ)
           
           // 只有在用户没有手动调整过相机距离时，才更新 cameraDistance
           if (!userAdjustedCameraRef.current) {
