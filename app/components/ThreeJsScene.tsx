@@ -19,6 +19,10 @@ const ThreeJsScene = () => {
   const modelRef = useRef<THREE.Group | null>(null)
   const [rotationSpeed, setRotationSpeed] = useState(0.01)
   const [selectedModel, setSelectedModel] = useState(modelLinks[0])
+  const [cameraDistance, setCameraDistance] = useState(10)
+  const initialCameraPositionRef = useRef<THREE.Vector3 | null>(null)
+  const [initialCameraDistance, setInitialCameraDistance] = useState(10)
+  const userAdjustedCameraRef = useRef(false)
 
   useEffect(() => {
     if (!mountRef.current) return
@@ -102,6 +106,15 @@ const ThreeJsScene = () => {
           camera.position.set(center.x, center.y, center.z + cameraZ)
           camera.lookAt(center)
           camera.updateProjectionMatrix()
+
+          // 保存初始相机位置
+          initialCameraPositionRef.current = camera.position.clone()
+          setInitialCameraDistance(cameraZ)
+          
+          // 只有在用户没有手动调整过相机距离时，才更新 cameraDistance
+          if (!userAdjustedCameraRef.current) {
+            setCameraDistance(cameraZ)
+          }
         },
         (xhr) => {
           if (xhr.lengthComputable) {
@@ -127,6 +140,13 @@ const ThreeJsScene = () => {
         modelRef.current.rotation.y += rotationSpeed
       }
 
+      // 更新相机位置
+      if (cameraRef.current && initialCameraPositionRef.current) {
+        const direction = cameraRef.current.position.clone().sub(new THREE.Vector3(0, 0, 0)).normalize()
+        cameraRef.current.position.copy(direction.multiplyScalar(cameraDistance))
+        cameraRef.current.lookAt(new THREE.Vector3(0, 0, 0))
+      }
+
       renderer.render(scene, camera)
     }
     animate()
@@ -145,8 +165,17 @@ const ThreeJsScene = () => {
         scene.remove(modelRef.current)
       }
     }
-  }, [rotationSpeed, selectedModel])
+  }, [rotationSpeed, selectedModel, cameraDistance])
 
+  const handleCameraDistanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value)
+    if (!isNaN(value) && value >= 1 && value <= 20) {
+      setCameraDistance(Number(value.toFixed(1)))
+      userAdjustedCameraRef.current = true
+    }
+  }
+
+  console.log('cameraDistance', cameraDistance)
   return (
     <div style={{ width: '100%', height: '400px' }}>
       <div ref={mountRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -165,7 +194,11 @@ const ThreeJsScene = () => {
               id="modelSelect" 
               value={selectedModel} 
               onChange={(e) => setSelectedModel(e.target.value)}
-              style={{ marginLeft: '10px' }}
+              style={{ 
+                marginLeft: '10px',
+                color: 'black',
+                backgroundColor: 'white'
+              }}
             >
               {modelLinks.map((link, index) => (
                 <option key={index} value={link}>
@@ -174,19 +207,46 @@ const ThreeJsScene = () => {
               ))}
             </select>
           </div>
-          <label htmlFor="speed">Rotation Speed: </label>
-          <input
-            id="speed"
-            type="range"
-            min="0"
-            max="0.1"
-            step="0.001"
-            value={rotationSpeed}
-            onChange={(e) => setRotationSpeed(parseFloat(e.target.value))}
-          />
-          <span style={{ marginLeft: '10px' }}>
-            {rotationSpeed.toFixed(3)}
-          </span>
+          <div style={{ marginBottom: '10px' }}>
+            <label htmlFor="speed">Rotation Speed: </label>
+            <input
+              id="speed"
+              type="number"
+              min="0"
+              max="0.1"
+              step="0.001"
+              value={rotationSpeed}
+              onChange={(e) => setRotationSpeed(parseFloat(e.target.value))}
+              style={{ 
+                width: '60px', 
+                marginLeft: '10px',
+                color: 'white',
+                backgroundColor: 'transparent',
+                border: 'none',
+                outline: 'none'
+              }}
+            />
+          </div>
+          <div>
+            <label htmlFor="zoom">Camera Zoom: </label>
+            <input
+              id="zoom"
+              type="number"
+              min="1"
+              max="20"
+              step="0.1"
+              value={cameraDistance}
+              onChange={handleCameraDistanceChange}
+              style={{ 
+                width: '60px', 
+                marginLeft: '10px',
+                color: 'white',
+                backgroundColor: 'transparent',
+                border: 'none',
+                outline: 'none'
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
